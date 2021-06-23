@@ -77,4 +77,20 @@ RCT_EXPORT_METHOD(getDeviceCountry:(RCTPromiseResolveBlock)resolve
     resolve(countryCode);
 }
 
+RCT_EXPORT_METHOD(isTestFlight:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+NSString *receiptURLString = [receiptURL path];
+BOOL isRunningTestFlightBeta =  ([receiptURLString rangeOfString:@"sandboxReceipt"].location != NSNotFound);
+resolve(@{ @"isTestFlight": @(isRunningTestFlightBeta) });
+}
+
+RCT_EXPORT_METHOD(getTrackingStatus:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+  ATTrackingManagerAuthorizationStatus status = [ATTrackingManager trackingAuthorizationStatus];
+  resolve(@{ @"trackingStatus": @(status) });
+}
+
 @end
