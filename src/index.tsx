@@ -1,5 +1,5 @@
 
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import Axios from "axios";
 import type { Method } from "./types";
 import AdStore from "./index/AdStore";
@@ -74,7 +74,7 @@ class _MonkeyTracker {
           resolve(true);
           await this.login()
         } else {
-          if (!userIDFA.attribution) {
+          if (!userIDFA.attribution && Platform.OS !== "android") {
             if (this.IS_DEBUG) {
               console.log("Attribution api fail...");
               console.log("Attribution api request will send 20 secs later.");
@@ -241,6 +241,7 @@ class _MonkeyTracker {
           attribution,
           storefront,
         };
+        console.log(body);
         const { data } = await this.sendSDKRequest("client/auth/handshake", "POST", body);
         Axios.defaults.headers.common['Authorization'] = data.token;
         AdStore.setUserId(data.user.id);

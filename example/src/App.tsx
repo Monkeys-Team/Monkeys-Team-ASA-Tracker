@@ -11,6 +11,7 @@ export default function App() {
   MonkeyTracker.init("MONKEY-TRACKER-ydsf2hs1kmomn671", 123, "", true).then( async () => {
     await MonkeyTracker.getRewardedAds()
     await MonkeyTracker.getInterstitial();
+    // await MonkeyTracker.userIDFA();
   })
 
   // MonkeyTracker.getStoreFront();
@@ -19,7 +20,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Result:</Text>
       <TouchableOpacity onPress={ async () => { 
-        await ShowRewarded();
+        
        }}>
         <Text>
           Click
