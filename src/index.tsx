@@ -39,7 +39,10 @@ class _MonkeyTracker {
           this.DEVICE_ID = device_id;
         }
 
-        // await this.userIDFA();
+        const { trackingStatus } = await Native_MonkeyTracker.getTrackingStatus();
+        if (trackingStatus === 3) {
+          await this.userIDFA();
+        }
         this.APP_KEY = APP_KEY;
         const logResp = await this.login();
         if (DEBUG) {
@@ -260,10 +263,6 @@ class _MonkeyTracker {
           }
         }
         // this.API_USER = data.user;
-        const { trackingStatus } = await Native_MonkeyTracker.getTrackingStatus();
-        if(trackingStatus === 3) {
-          await this.userIDFA();
-        }
         resolve(data.user);
       } catch (e) {
         resolve(false);
