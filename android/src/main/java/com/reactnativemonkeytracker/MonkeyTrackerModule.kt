@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 import android.provider.Settings
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import android.os.Build;
 
 data class TrackingStatus(val d: Int) {
     var trackingStatus: Int = d
@@ -47,6 +48,21 @@ class MonkeyTrackerModule(reactContext: ReactApplicationContext) : ReactContextB
       val locale = getReactApplicationContext().getResources().getConfiguration().locale.getCountry();
       promise.resolve(locale);
     }
+
+    @ReactMethod
+    fun getAppVersion(promise:Promise){
+      val pInfo = getReactApplicationContext().getPackageManager().getPackageInfo(getReactApplicationContext().getPackageName(), 0);
+      val version = pInfo.versionName;
+      promise.resolve(version);
+    }
+
+    @ReactMethod
+    fun getOSVersion(promise:Promise){
+      val v = Build.VERSION.RELEASE;
+      promise.resolve(v);
+    }
+
+    
 
     @ReactMethod
     fun getIDFA(promise: Promise) {

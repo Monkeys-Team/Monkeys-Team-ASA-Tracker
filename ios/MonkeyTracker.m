@@ -64,6 +64,17 @@ RCT_EXPORT_METHOD(getDeviceId:(RCTPromiseResolveBlock)resolve
   resolve(currentDeviceId);
 }
 
+RCT_EXPORT_METHOD(getAppVersion:RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject){
+  NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+  resolve(version);
+}
+
+RCT_EXPORT_METHOD(getOSVersion:RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
+  UIDevice *currentDevice = [UIDevice currentDevice];
+  resolve(currentDevice.systemVersion)
+}
+
 RCT_EXPORT_METHOD(getDeviceCountry:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject){
     NSLocale *locale;

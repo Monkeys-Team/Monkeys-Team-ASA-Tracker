@@ -233,6 +233,8 @@ class _MonkeyTracker {
           idfa = this.USER_IDFA.idfa;
         }
         const storefront = await this.getStoreFront();
+        const appVersion = await Native_MonkeyTracker.getAppVersion();
+        const osVersion = await Native_MonkeyTracker.getOSVersion();
         const body = {
           deviceId: this.DEVICE_ID,
           sdkKey: this.APP_KEY,
@@ -240,8 +242,11 @@ class _MonkeyTracker {
           appUserId: this.APP_USER_ID,
           attribution,
           storefront,
+          platform: Platform.OS,
+          osVersion,
+          appVersion,
         };
-        console.log(body);
+        console.log("body",body);
         const { data } = await this.sendSDKRequest("client/auth/handshake", "POST", body);
         Axios.defaults.headers.common['Authorization'] = data.token;
         AdStore.setUserId(data.user.id);
