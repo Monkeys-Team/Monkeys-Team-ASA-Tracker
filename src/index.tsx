@@ -38,18 +38,21 @@ class _MonkeyTracker {
           const device_id = await Native_MonkeyTracker.getDeviceId();
           this.DEVICE_ID = device_id;
         }
-
-        const { trackingStatus } = await Native_MonkeyTracker.getTrackingStatus();
-        if (trackingStatus === 3) {
-          await this.userIDFA();
-        }
+        
         this.APP_KEY = APP_KEY;
-        const logResp = await this.login();
+
         if (DEBUG) {
           console.log("Monkeys Team Debug Mode Active");
           console.log(`App Key Setted -> ${APP_KEY}`);
           console.log(`Device ID -> ${this.DEVICE_ID}`);
         }
+
+        const { trackingStatus } = await Native_MonkeyTracker.getTrackingStatus();
+        if (trackingStatus === 3) {
+          await this.userIDFA();
+        }
+        
+        const logResp = await this.login();
         return resolve(logResp);
       } catch (e) {
         await this.login();
